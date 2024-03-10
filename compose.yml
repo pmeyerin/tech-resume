@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+    backend:
+        image: resume-service
+        container_name: resume-service
+        build:
+            context: ./resume
+        ports:
+          - "9000:80"
+        depends_on:
+          - db
+
+    frontend:
+        image: resume-ui
+        container_name: resume-ui
+        build:
+            context: ./resume-ui
+        ports:
+          - "4200:80"
+        depends_on:
+          - backend
+    
+    db:
+      image: postgres
+      restart: always
+      user: postgres
+      environment:
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_USER:
+        POSTGRES_DB: resume
+      ports:
+        - "5432:5432"

@@ -1,0 +1,15 @@
+.skills-list {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: 5px;
+  border-top: 2px black solid;
+}
+
+.skill-block {
+  border: black solid 2px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: lightgoldenrodyellow;
+  color: black;
+}

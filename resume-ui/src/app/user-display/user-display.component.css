@@ -1,0 +1,9 @@
+.user-display {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  border-bottom: black solid 2px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  margin: 0px 15px 0px 15px;
+}

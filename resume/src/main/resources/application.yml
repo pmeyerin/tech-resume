@@ -1,0 +1,21 @@
+spring:
+  http:
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://db:5432/resume
+    username: postgres
+    password: postgres
+  flyway:
+    create-schemas: true
+    locations: classpath:db/migration/common, classpath:db/migration/dml
+
+server:
+  port: 80
+
+logging:
+  level:
+    coop:
+      stlma:
+        tech:
+          resume: trace

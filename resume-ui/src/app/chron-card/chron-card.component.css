@@ -1,0 +1,13 @@
+.chron-card {
+  border: black solid 2px;
+  border-radius: 25px;
+  padding: 5px;
+  margin-bottom: 15px;
+  width: 80%;
+  margin-right: 15px;
+  background-color: blue;
+}
+
+.chron-summary {
+  border-bottom: black solid 2px;
+}

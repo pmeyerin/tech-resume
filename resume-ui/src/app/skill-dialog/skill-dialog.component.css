@@ -1,0 +1,8 @@
+.list-by-skill {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  padding-top: 15px;
+  background-color: darkblue;
+  color: white;
+}
