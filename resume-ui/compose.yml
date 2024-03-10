@@ -1,0 +1,17 @@
+services:
+  node:
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    container_name: ui
+#    ports:
+#      - 4200:80
+
+#    image: demo-ui
+#    container_name: demo-ui
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    ports:
+      - "4200:80"

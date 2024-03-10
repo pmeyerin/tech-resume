@@ -1,0 +1,32 @@
+.skills-section-wrapper {
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.skills-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 5px;
+}
+
+.skill-estimate-block {
+  border: black solid 2px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: lightgoldenrodyellow;
+  color: black;
+  cursor: pointer;
+}
+
+.summary-header {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.summary-help {
+  padding-left: 10px;
+  cursor: pointer;
+  color: orange;
+}

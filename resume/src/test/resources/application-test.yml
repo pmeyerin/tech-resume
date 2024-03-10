@@ -1,0 +1,8 @@
+spring:
+  flyway:
+    locations: classpath:/db/migration/common
+  datasource:
+    url: jdbc:tc:postgresql:11.1:///integration-tests-db
+
+#flyway:
+#  locations: classpath:/db/migration1/common

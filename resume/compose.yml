@@ -1,0 +1,21 @@
+version: '1'
+
+services:
+  sampleService:
+    image: tech-resume:latest
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+    environment:
+      - "SPRING_PROFILES_ACTIVE=solo"
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER:
+      POSTGRES_DB: resume
+    ports:
+      - 5432:5432

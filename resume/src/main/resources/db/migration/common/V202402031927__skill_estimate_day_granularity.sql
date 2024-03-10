@@ -1,0 +1,4 @@
+ALTER TABLE worker_skill_estimate RENAME COLUMN skill_years_estimate TO skill_days_estimate;
+
+
+ALTER TABLE worker_skill_estimate RENAME COLUMN worker_skill_relation_id TO worker_skill_estimate_id;
