@@ -4,7 +4,7 @@ FROM openjdk:20
 #ENTRYPOINT ["java","-jar","/app.jar"]
 
 WORKDIR /opt/app
-COPY --chown=gradle:gradle . /home/gradle/src
+COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
 
