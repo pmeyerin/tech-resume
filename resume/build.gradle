@@ -61,9 +61,6 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	//cloud
-	implementation 'org.springframework.cloud:spring-cloud-gcp-starter-sql-postgresql'
-
 	//Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
