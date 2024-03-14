@@ -1,12 +1,11 @@
-FROM openjdk:20
+FROM eclipse-temurin:20 AS build
 #ARG JAR_FILE
 #COPY build/libs/*.jar app.jar
 #ENTRYPOINT ["java","-jar","/app.jar"]
 
-WORKDIR /opt/app
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
+RUN ./gradlew jar --no-daemon
 
 FROM openjdk:20
 EXPOSE 8080
