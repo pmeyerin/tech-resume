@@ -5,7 +5,7 @@ FROM eclipse-temurin:20 AS build
 
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN ./gradlew jar --no-daemon
+RUN ./gradlew shadowJar --no-daemon
 
 FROM openjdk:20
 EXPOSE 8080
