@@ -21,6 +21,14 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'coop.stlma.tech.resume.ResumeApplication'
+		)
+	}
+}
+
 dependencies {
 	//boot
 	implementation 'org.springframework.boot:spring-boot-starter'
