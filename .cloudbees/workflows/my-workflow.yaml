@@ -13,4 +13,11 @@ jobs:
       - name: deploy
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
-        run: fullDevDeploy.sh
+        run: | 
+          cd resume
+          ./gradlew clean bootJar
+          docker build -t tech-resume:latest .
+          cd ../resume-ui
+          docker build -t resume-ui:latest .
+          cd ../
+          docker compose up
