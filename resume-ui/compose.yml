@@ -2,7 +2,7 @@ services:
   node:
 #    build:
 #      context: ./
-#      dockerfile: Dockerfile
+#      dockerfile: Dockerfile.fly.bk.fly
 #    container_name: ui
 #    ports:
 #      - 4200:80
