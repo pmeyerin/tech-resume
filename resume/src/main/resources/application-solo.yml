@@ -1,3 +1,9 @@
 
 server:
   port: 8080
+
+coop:
+  stlma:
+    tech:
+      resume:
+        allowedOrigins: http://localhost:4201

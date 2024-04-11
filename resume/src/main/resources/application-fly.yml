@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    show-sql: false
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8080
