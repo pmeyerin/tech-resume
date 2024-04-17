@@ -10,4 +10,11 @@ spring:
     locations: classpath:db/migration/common, classpath:db/migration/dml
 
 server:
-  port: 80
+  port: 8080
+
+logging:
+  level:
+    coop:
+      stlma:
+        tech:
+          resume: trace

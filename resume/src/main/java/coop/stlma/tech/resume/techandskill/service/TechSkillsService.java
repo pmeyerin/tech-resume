@@ -57,23 +57,12 @@ public class TechSkillsService {
 
     public void bulkSave(List<String> techSkill)  {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("tech-skill.txt"));
             techSkillsRepository.saveAll(techSkill.stream()
                     .map(techSkillName -> {
                         TechAndSkillEntity techAndSkillEntity = new TechAndSkillEntity();
                         techAndSkillEntity.setTechSkillName(techSkillName);
                         return techAndSkillEntity;
-                    }).collect(Collectors.toList()))
-                    .forEach(techAndSkillEntity -> {
-                        try {
-                            writer.write("INSERT INTO tech_and_skills (tech_skill_id, tech_skill_name)\n" +
-                                    "VALUES ('" + techAndSkillEntity.getTechSkillId() + "', '" + techAndSkillEntity.getTechSkillName() + "');");
-                            writer.newLine();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-            writer.flush();
+                    }).collect(Collectors.toList()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
