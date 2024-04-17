@@ -9,4 +9,4 @@ RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/tech-resume.jar
 #RUN gradlew clean bootJar
 #ADD build/libs/*.jar demo.jar
-ENTRYPOINT ["java", "-jar", "/app/tech-resume.jar", "--spring.profiles.active=solo"]
+ENTRYPOINT ["java", "-jar", "/app/tech-resume.jar", "--spring.profiles.active=fly"]

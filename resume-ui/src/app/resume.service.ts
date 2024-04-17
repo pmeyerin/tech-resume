@@ -7,7 +7,6 @@ import {SkillsDomain} from "./skills-domain";
 import {TechSkills} from "./tech-skills";
 import {HttpClient} from "@angular/common/http";
 import {WorkerSkillRelationDomain} from "./worker-skill-relation-domain";
-import {environmentJsonserver} from "../environments/environment.jsonserver";
 import {environment} from "../environments/environment";
 
 @Injectable({
@@ -21,8 +20,9 @@ export class ResumeService {
   }
 
   http: HttpClient = inject(HttpClient);
-  url = '/api';
+  // url = '/api';
   // url = "http://localhost:8081/api";
+  url = environment.apiUrl;
   getSkillRelations(skill: TechSkills) {
     return this.http.get<WorkerSkillRelationDomain>(`${this.url}/tech-skills/related/${skill.techSkillId}/${this.workerIdMe}`) ?? {};
   }

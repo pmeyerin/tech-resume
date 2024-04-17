@@ -23,14 +23,14 @@ public class WorkerController {
     }
 
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:4200")
+//    @CrossOrigin(origins = "http://localhost:4201")
     public ResponseEntity<List<Worker>> getAllWorkers() {
         log.trace("in controller");
         return ResponseEntity.ok(workerService.getAllWorkers());
     }
 
     @GetMapping("/{workerId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+//    @CrossOrigin(origins = "http://localhost:4201")
     public ResponseEntity<Worker> workerById(@PathVariable("workerId") UUID workerId) {
         log.trace("in controller");
         return ResponseEntity.ok(workerService.getWorker(workerId));

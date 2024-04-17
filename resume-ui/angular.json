@@ -30,6 +30,27 @@
             "scripts": []
           },
           "configurations": {
+            "solo": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.solo.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "production": {
               "budgets": [
                 {
@@ -45,13 +66,19 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "fly": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.fly.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -59,11 +86,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "resume-ui:build:production"
+            "solo": {
+              "buildTarget": "resume-ui:build:solo"
             },
-            "development": {
-              "browserTarget": "resume-ui:build:development"
+            "production": {
+              "buildTarget": "resume-ui:build:production"
+            },
+            "fly": {
+              "buildTarget": "resume-ui:build:fly"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "resume-ui:build"
+            "buildTarget": "resume-ui:build"
           }
         },
         "test": {
