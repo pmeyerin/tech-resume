@@ -7,3 +7,11 @@ spring:
 
 server:
   port: 8080
+
+coop:
+  stlma:
+    tech:
+      resume:
+        allowedOrigins:
+          - https://tech-resume-ui.fly.dev
+          - https://tech-resume.citizenabacus.com

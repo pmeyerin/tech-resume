@@ -87,13 +87,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "solo": {
-              "browserTarget": "resume-ui:build:solo"
+              "buildTarget": "resume-ui:build:solo"
             },
             "production": {
-              "browserTarget": "resume-ui:build:production"
+              "buildTarget": "resume-ui:build:production"
             },
             "fly": {
-              "browserTarget": "resume-ui:build:fly"
+              "buildTarget": "resume-ui:build:fly"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "resume-ui:build"
+            "buildTarget": "resume-ui:build"
           }
         },
         "test": {
