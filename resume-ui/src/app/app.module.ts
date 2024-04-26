@@ -9,7 +9,6 @@ import { SkillsOverviewComponent } from './skills-overview/skills-overview.compo
 import {MatChipsModule} from "@angular/material/chips";
 import { WorkHistoryComponent } from './work-history/work-history.component';
 import {MatTabsModule} from "@angular/material/tabs";
-import { ChronHistoryComponent } from './chron-history/chron-history.component';
 import { RootNavComponent } from './root-nav/root-nav.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,9 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from "@angular/material/expansion";
-import { ChronCardComponent } from './chron-card/chron-card.component';
 import {MatCardModule} from "@angular/material/card";
-import { CatCardComponent } from './cat-card/cat-card.component';
 import { CatDashComponent } from './cat-dash/cat-dash.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -35,15 +32,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     AppComponent,
     UserDisplayComponent,
     SkillsOverviewComponent,
-    WorkHistoryComponent,
-    ChronHistoryComponent,
     RootNavComponent,
-    ChronCardComponent,
-    CatCardComponent,
     CatDashComponent,
     ProjectParentComponent,
     CategorySectionComponent,
-    SkillsDialogComponent
+    SkillsDialogComponent,
+    WorkHistoryComponent
   ],
     imports: [
         BrowserModule,

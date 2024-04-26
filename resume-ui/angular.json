@@ -86,13 +86,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "resume-ui:build:production"
+              "browserTarget": "resume-ui:build:production"
             },
             "development": {
-              "buildTarget": "resume-ui:build:development"
+              "browserTarget": "resume-ui:build:development"
             },
             "fly": {
-              "buildTarget": "resume-ui:build:fly"
+              "browserTarget": "resume-ui:build:fly"
             }
           },
           "defaultConfiguration": "development"
