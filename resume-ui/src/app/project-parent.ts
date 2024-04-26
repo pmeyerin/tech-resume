@@ -6,7 +6,7 @@ export interface ProjectParent {
   parentType: string
   description: string
   startDate: Date
-  endDate?: Date
+  endDate?: Date | null
   projects: Project[]
   projectParentSkills: TechSkills[]
 }

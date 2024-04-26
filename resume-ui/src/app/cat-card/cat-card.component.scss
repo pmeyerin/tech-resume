@@ -1,0 +1,36 @@
+
+@use '@angular/material' as mat;
+@use '../../cit-abby-theme.scss' as theme;
+@include mat.core();
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: theme.$dark-bg-lighter-10;
+}
+
+.projects-div {
+  //width: 20%;
+  flex-direction: column;
+  display: flex;
+}
+
+.project-card {
+  //top: 15px;
+  left: 20%;
+  right: 15px;
+  bottom: 50px;
+  background: theme.$dark-bg-lighter-20;
+  width: 80%;
+}
+
+
+.blog-para {
+  text-indent: 25px;
+}
+
+.internalMatGrid {
+  border:1px solid red; min-width:80%;
+}

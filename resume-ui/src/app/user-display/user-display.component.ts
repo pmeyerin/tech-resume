@@ -5,13 +5,23 @@ import {Component, Input} from '@angular/core';
   template: `
     <header>
       <div class="user-display">
-        {{user}}
+        <div class="field">
+          <div>Name:</div>
+          <div>Contact phone:</div>
+          <div>Contact email:</div>
+        </div>
+        <div class="values">
+          <div>{{user}}</div>
+          <div>{{phone}}</div>
+          <div>{{email}}</div>
+        </div>
       </div>
     </header>
   `,
-  styleUrls: ['./user-display.component.css']
+  styleUrls: ['./user-display.component.scss']
 })
 export class UserDisplayComponent {
-  @Input() user!: string;
-
+  @Input() user!: string | undefined;
+  @Input() phone!: string |  undefined;
+  @Input() email!: string | undefined;
 }

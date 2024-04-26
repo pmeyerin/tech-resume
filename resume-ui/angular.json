@@ -5,7 +5,11 @@
   "projects": {
     "resume-ui": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -20,37 +24,18 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "src/cit-abby-theme.scss"
             ],
             "scripts": []
           },
           "configurations": {
-            "solo": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.solo.ts"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "production": {
               "budgets": [
                 {
@@ -66,7 +51,7 @@
               ],
               "outputHashing": "all"
             },
-            "fly": {
+            "development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -76,7 +61,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.fly.ts"
+                  "with": "src/environments/environment.development.ts"
                 }
               ]
             }
@@ -86,14 +71,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "solo": {
-              "buildTarget": "resume-ui:build:solo"
-            },
             "production": {
-              "buildTarget": "resume-ui:build:production"
+              "browserTarget": "resume-ui:build:production"
             },
-            "fly": {
-              "buildTarget": "resume-ui:build:fly"
+            "development": {
+              "browserTarget": "resume-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "resume-ui:build"
+            "browserTarget": "resume-ui:build"
           }
         },
         "test": {
@@ -112,12 +94,13 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }

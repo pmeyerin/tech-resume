@@ -1,0 +1,43 @@
+@use '@angular/material' as mat;
+@use '../../cit-abby-theme.scss' as theme;
+@include mat.core();
+
+.relation-card {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: theme.$dark-bg-lighter-30;
+  padding-bottom: 5px;
+}
+
+.relations-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.card-container {
+  padding-bottom: 5px;
+}
+
+.dialog-card {
+  //position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: theme.$dark-background;
+  padding-bottom: 5px;
+  color: theme.$light-text
+}
+
+.dialog {
+  color: theme.$light-text
+}
+
+.highlight-skill {
+  color: theme.$dark-accent-lighter
+}

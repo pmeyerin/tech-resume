@@ -1,0 +1,22 @@
+
+@use '@angular/material' as mat;
+@use '../../cit-abby-theme.scss' as theme;
+@include mat.core();
+
+.parent-card {
+  border: theme.$light-accent-text solid 2px;
+  padding: 5px;
+  margin-bottom: 15px;
+  background-color: theme.$dark-bg-lighter-10;
+  border-radius: 25px;
+  /*width: 50%;*/
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  background: theme.$dark-background;
+}

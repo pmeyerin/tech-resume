@@ -1,0 +1,18 @@
+
+@use '@angular/material' as mat;
+@use '../../cit-abby-theme.scss' as theme;
+@include mat.core();
+
+.user-display {
+  display: flex;
+  flex-direction: row;
+}
+
+.field {
+  font-weight: bold;
+  color: theme.$light-accent-text;
+}
+
+.values {
+  margin-left: 5px;
+}

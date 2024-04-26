@@ -2,54 +2,68 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { UserDisplayComponent } from './user-display/user-display.component';
-import { ViewsDisplayComponent } from './views-display/views-display.component';
-import { CatViewComponent } from './cat-view/cat-view.component';
-import { ChronViewComponent } from './chron-view/chron-view.component';
-import { RouterOutlet } from "@angular/router";
-import { AppRoutingModule } from "./app-routing.module";
-import { ProjectCardComponent } from './project-card/project-card.component';
-import { ProjectParentCardComponent } from './project-parent-card/project-parent-card.component';
-import { SkillsListComponent } from './skills-list/skills-list.component';
-import { ChronCardComponent } from './chron-card/chron-card.component';
-import { WorkerSkillsSectionComponent } from './worker-skills-section/worker-skills-section.component';
-import { WorkHistorySectionComponent } from './work-history-section/work-history-section.component';
-import { CategoryCardComponent } from './category-card/category-card.component';
-import { HttpClientModule } from '@angular/common/http';
-import { SkillDialogComponent } from './skill-dialog/skill-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from "@angular/router";
-import { ModalComponent } from './modal/modal.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { UserDisplayComponent } from './user-display/user-display.component';
+import { SkillsOverviewComponent } from './skills-overview/skills-overview.component';
+import {MatChipsModule} from "@angular/material/chips";
+import { WorkHistoryComponent } from './work-history/work-history.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { ChronHistoryComponent } from './chron-history/chron-history.component';
+import { RootNavComponent } from './root-nav/root-nav.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import {MatExpansionModule} from "@angular/material/expansion";
+import { ChronCardComponent } from './chron-card/chron-card.component';
+import {MatCardModule} from "@angular/material/card";
+import { CatCardComponent } from './cat-card/cat-card.component';
+import { CatDashComponent } from './cat-dash/cat-dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { HttpClientModule } from "@angular/common/http";
+import { ProjectParentComponent } from './project-parent/project-parent.component';
+import { CategorySectionComponent } from './category-section/category-section.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { SkillsDialogComponent } from './skills-dialog/skills-dialog.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     UserDisplayComponent,
-    ViewsDisplayComponent,
-    CatViewComponent,
-    ChronViewComponent,
-    ProjectCardComponent,
-    ProjectParentCardComponent,
-    SkillsListComponent,
+    SkillsOverviewComponent,
+    WorkHistoryComponent,
+    ChronHistoryComponent,
+    RootNavComponent,
     ChronCardComponent,
-    WorkerSkillsSectionComponent,
-    WorkHistorySectionComponent,
-    CategoryCardComponent,
-    SkillDialogComponent,
-    ModalComponent,
-    TooltipComponent
+    CatCardComponent,
+    CatDashComponent,
+    ProjectParentComponent,
+    CategorySectionComponent,
+    SkillsDialogComponent
   ],
-  imports: [
-      BrowserModule,
-      AppRoutingModule,
-      RouterOutlet,
-      HttpClientModule,
-      BrowserAnimationsModule,
-      RouterModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        CdkAccordionModule,
+        MatChipsModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatExpansionModule,
+        MatCardModule,
+        MatGridListModule,
+        MatMenuModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatTooltipModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
