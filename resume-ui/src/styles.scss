@@ -3,3 +3,13 @@
 @include mat.core();
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background:  theme.$dark-bg-lighter-10}
+
+
+.opacity {
+  background-color: theme.$dark-background;
+  opacity: .97 !important;
+}
+
+.dark-bg-tooltip {
+  background: theme.$dark-background !important;
+}

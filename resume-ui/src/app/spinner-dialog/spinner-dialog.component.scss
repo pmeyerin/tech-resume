@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+@use '../../cit-abby-theme.scss' as theme;
+@include mat.core();
+
+.dialog {
+  color: theme.$light-text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 15px;
+}
