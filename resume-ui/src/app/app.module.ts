@@ -25,7 +25,9 @@ import { ProjectParentComponent } from './project-parent/project-parent.componen
 import { CategorySectionComponent } from './category-section/category-section.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { SkillsDialogComponent } from './skills-dialog/skills-dialog.component';
+import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -37,27 +39,29 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     ProjectParentComponent,
     CategorySectionComponent,
     SkillsDialogComponent,
-    WorkHistoryComponent
+    WorkHistoryComponent,
+    SpinnerDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        CdkAccordionModule,
-        MatChipsModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatExpansionModule,
-        MatCardModule,
-        MatGridListModule,
-        MatMenuModule,
-        HttpClientModule,
-        MatDialogModule,
-        MatTooltipModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    CdkAccordionModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatGridListModule,
+    MatMenuModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
