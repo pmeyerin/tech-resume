@@ -5,6 +5,6 @@ export interface Project {
   projectName: string;
   projectDescription: string;
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
   projectSkills: TechSkills[];
 }

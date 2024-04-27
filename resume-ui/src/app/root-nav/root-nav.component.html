@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-expansion-panel [expanded]="true" class="main-accordion">
+    <mat-expansion-panel-header class="accent-color" >
+      <mat-panel-title>
+        Worker overview
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div style="padding-top: 5px">
+      <app-user-display [user]="workHistory?.workerName" [phone]="'[Withheld]'" [email]="'John@CitizenAbacus.com'"></app-user-display>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true" class="main-accordion">
+    <mat-expansion-panel-header class="accent-color">
+      <mat-panel-title>
+        Skills overview
+      </mat-panel-title>
+      <mat-panel-description
+        matTooltip="Estimated years of experience with each given skill or technology. The estimate is calculated by adding up non-overlapping times a skill or technology was used as part of an employment or project, or was being used in education."
+        [matTooltipHideDelay]="1000"
+        [matTooltipClass]="'dark-bg-tooltip'">
+        How experience estimation is calculated
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div style="padding-top: 5px">
+      <app-skills-overview [skills]="workHistory?.workerSkillEstimates"></app-skills-overview>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true" class="main-accordion">
+    <mat-expansion-panel-header class="accent-color">
+      <mat-panel-title>
+        Work history
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-work-history [workHistory]="workHistory"></app-work-history>
+  </mat-expansion-panel>
+</mat-sidenav-container>

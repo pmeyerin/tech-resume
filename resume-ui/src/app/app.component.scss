@@ -1,0 +1,12 @@
+.whole-page {
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+@media screen and (max-width: 950px) {
+  .whole-page {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+}

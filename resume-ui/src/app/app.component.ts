@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <main class="root-class">
-      <app-home></app-home>
-    </main>
+    <div class="whole-page">
+      <app-root-nav ></app-root-nav>
+    </div>
   `,
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'resume-ui';
+
 }
