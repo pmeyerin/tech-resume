@@ -1,5 +1,6 @@
 package coop.stlma.tech.resume.worker.data;
 
+import coop.stlma.tech.resume.education.data.EducationRepository;
 import coop.stlma.tech.resume.education.data.EducationTypeRepository;
 import coop.stlma.tech.resume.education.data.entity.EducationEntity;
 import coop.stlma.tech.resume.employment.data.EmploymentRepository;
@@ -46,6 +47,9 @@ public class WorkerRepositoryTest {
     @Autowired
     EmploymentRepository employmentRepository;
 
+    @Autowired
+    EducationRepository educationRepository;
+
     @ClassRule
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:11.1")
             .withDatabaseName("user")
@@ -59,10 +63,11 @@ public class WorkerRepositoryTest {
         educationTypeRepository.deleteAll();
         projectRepository.deleteAll();
         employmentRepository.deleteAll();
+        educationRepository.deleteAll();
     }
 
     @Test
-    public void testGetAllWorkers_noEmploymentHistory() {
+    void testGetAllWorkers_noEmploymentHistory() {
         WorkerEntity saveMe = new WorkerEntity();
         saveMe.setWorkerName("Some guy");
         saveMe.setWorkerEmail("some@guy.com");
@@ -84,7 +89,7 @@ public class WorkerRepositoryTest {
     }
 
     @Test
-    public void testGetAllWorkers_OneFound() {
+    void testGetAllWorkers_OneFound() {
         TechAndSkillEntity javaSkill = new TechAndSkillEntity();
         javaSkill.setTechSkillName("java");
         javaSkill = techSkillsRepository.save(javaSkill);
@@ -252,7 +257,7 @@ public class WorkerRepositoryTest {
     }
 
     @Test
-    public void testGetAllWorkers_ManyFound() {
+    void testGetAllWorkers_ManyFound() {
         WorkerEntity saveMe = new WorkerEntity();
         saveMe.setWorkerName("Some guy");
         saveMe.setWorkerEmail("some@guy.com");
@@ -277,7 +282,7 @@ public class WorkerRepositoryTest {
     }
 
     @Test
-    public void testGetAll_noneFound() {
+    void testGetAll_noneFound() {
         Iterable<WorkerEntity> found = testObject.findAll();
         List<WorkerEntity> easierToWorkWith = new ArrayList<>();
         found.forEach(easierToWorkWith::add);

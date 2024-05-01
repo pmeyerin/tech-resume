@@ -92,4 +92,13 @@ public class ProjectService {
                 .map(EntityDtoMappingUtils::buildProject)
                 .orElseThrow(() -> new NoSuchProjectException(projectId));
     }
+
+    public Project updateProject(Project project) {
+        ProjectEntity existing = projectRepository.findById(project.getProjectId()).orElseThrow(() -> new NoSuchProjectException(project.getProjectId()));
+        ProjectEntity entity = EntityDtoMappingUtils.buildProjectEntity(project, existing.getProjectRelationType());
+        entity.setProjectRelation(existing.getProjectRelation());
+        entity.setTechsAndSkills(existing.getTechsAndSkills());
+        ProjectEntity result = projectRepository.save(entity);
+        return EntityDtoMappingUtils.buildProject(result);
+    }
 }

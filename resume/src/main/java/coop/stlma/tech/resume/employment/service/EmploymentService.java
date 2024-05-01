@@ -86,4 +86,12 @@ public class EmploymentService {
                 .map(EntityDtoMappingUtils::buildProject)
                 .orElse(null);
     }
+
+    public Employment updateEmployment(Employment employment) {
+        EmploymentEntity existing = employmentRepository.findById(employment.getEmploymentId())
+                .orElseThrow(() -> new NoSuchEmploymentException(employment.getEmploymentId()));
+        EmploymentEntity updateMe = EntityDtoMappingUtils.buildEmploymentDto(existing.getWorker(), employment);
+        EmploymentEntity result = employmentRepository.save(updateMe);
+        return EntityDtoMappingUtils.buildEmployment(result);
+    }
 }

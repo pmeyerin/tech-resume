@@ -2,6 +2,7 @@ package coop.stlma.tech.resume.employment.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.employment.Employment;
 import coop.stlma.tech.resume.employment.controller.EmploymentController;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
@@ -11,12 +12,17 @@ import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,6 +37,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 @WebMvcTest(controllers = EmploymentController.class)
+@RunWith(SpringRunner.class)
+@ActiveProfiles("test")
+@Import(BasicAuthConfigAdapter.class)
 class EmploymentControllerTest {
     @MockBean
     EmploymentService employmentService;
@@ -45,12 +54,41 @@ class EmploymentControllerTest {
     ArgumentCaptor<Project> projectCaptor;
 
     @Test
+    void testUpdateEmployment_happyPath() throws Exception {
+        UUID employmentId = UUID.nameUUIDFromBytes("employment".getBytes());
+        Mockito.when(employmentService.updateEmployment(argumentCaptor.capture()))
+                .thenReturn(Employment.builder().employmentId(employmentId).build());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/employment")
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
+                        .contentType("application/json")
+                        .content(new ObjectMapper().writeValueAsString(
+                                Map.of("employmentId", employmentId,
+                                        "employmentEnd", "2023-04-05",
+                                        "employmentStart", "2023-01-06",
+                                        "employmentName", "Fake Job",
+                                        "employmentDescription", "Fake Job desc"))))
+                        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employmentService).updateEmployment(argumentCaptor.capture());
+
+        Employment savedEmp = argumentCaptor.getValue();
+        Assertions.assertEquals(employmentId, savedEmp.getEmploymentId());
+        Assertions.assertEquals("Fake Job", savedEmp.getEmploymentName());
+        Assertions.assertEquals("Fake Job desc", savedEmp.getEmploymentDescription());
+        Assertions.assertEquals(LocalDate.of(2023, 1, 6), savedEmp.getEmploymentStart());
+        Assertions.assertEquals(LocalDate.of(2023, 4, 5), savedEmp.getEmploymentEnd());
+
+    }
+
+    @Test
     void testAddEmploymentToWorker_happyPath() throws Exception {
         UUID workerId = UUID.nameUUIDFromBytes("worker".getBytes());
         Mockito.when(employmentService.addEmployment(eq(workerId), argumentCaptor.capture()))
                 .thenReturn(Employment.builder().employmentId(UUID.nameUUIDFromBytes("employment".getBytes())).build());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/employment/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("employmentEnd", "2023-04-05",
@@ -136,6 +174,7 @@ class EmploymentControllerTest {
         UUID workerId = UUID.nameUUIDFromBytes("worker".getBytes());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/employment/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("employmentType", "UNDERGRADUATE",
@@ -156,6 +195,7 @@ class EmploymentControllerTest {
                 .thenThrow(new NoSuchWorkerException(workerId));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/employment/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("employmentType", "UNDERGRADUATE",
@@ -187,6 +227,7 @@ class EmploymentControllerTest {
                                 .build()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/employment/techSkill/" + employmentId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content("[\"Java\", \"Python\", \"Javascript\"]"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -208,6 +249,7 @@ class EmploymentControllerTest {
                 .thenThrow(new NoSuchEmploymentException(employmentId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/employment/techSkill/" + employmentId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content("[\"Java\", \"Python\", \"Javascript\"]"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -226,6 +268,7 @@ class EmploymentControllerTest {
                         .build());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/employment/project/" + employmentId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("projectName", "Fake Project",
@@ -254,6 +297,7 @@ class EmploymentControllerTest {
                 .thenThrow(new NoSuchEmploymentException(employmentId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/employment/project/" + employmentId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("projectName", "Fake Project",
