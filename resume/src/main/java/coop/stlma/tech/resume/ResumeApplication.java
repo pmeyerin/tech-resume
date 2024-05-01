@@ -26,7 +26,6 @@ public class ResumeApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-//						.allowedOrigins("http://localhost:4200");
 						.allowedOrigins(configProperties.getAllowedOrigins().toArray(new String[0]));
 			}
 		};

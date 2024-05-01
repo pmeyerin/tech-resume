@@ -2,16 +2,22 @@ package coop.stlma.tech.resume.worker.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.worker.Worker;
 import coop.stlma.tech.resume.worker.service.WorkerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,7 +33,10 @@ import java.util.UUID;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(controllers = WorkerController.class)
-public class WorkerControllerTest {
+@RunWith(SpringRunner.class)
+@ActiveProfiles("test")
+@Import(BasicAuthConfigAdapter.class)
+class WorkerControllerTest {
 
     @MockBean
     WorkerService workerService;
@@ -47,7 +56,7 @@ public class WorkerControllerTest {
     }
 
     @Test
-    public void testAddProjectToWorker() throws Exception {
+    void testAddProjectToWorker() throws Exception {
         UUID workerId = UUID.nameUUIDFromBytes("one".getBytes());
 
         Project newProject = Project.builder()
@@ -61,6 +70,7 @@ public class WorkerControllerTest {
                 .thenReturn(newProject);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/worker/project/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                 .contentType("application/json")
                 .characterEncoding("UTF-8")
                 .content(objectMapper.writeValueAsString(Map.of("projectName", "Some project", "projectDescription", "My favorite project"))))
@@ -72,7 +82,7 @@ public class WorkerControllerTest {
     }
 
     @Test
-    public void testGetWorker() throws Exception {
+    void testGetWorker() throws Exception {
         UUID workerId = UUID.nameUUIDFromBytes("one".getBytes());
         Mockito.when(workerService.getWorker(workerId))
                 .thenReturn(new Worker(workerId, "One name", "111-1111",
@@ -92,7 +102,7 @@ public class WorkerControllerTest {
     }
 
     @Test
-    public void testGetAllWorkers() throws Exception {
+    void testGetAllWorkers() throws Exception {
         Mockito.when(workerService.getAllWorkers())
                 .thenReturn(List.of(
                         new Worker(UUID.nameUUIDFromBytes("one".getBytes()), "One name", "111-1111",

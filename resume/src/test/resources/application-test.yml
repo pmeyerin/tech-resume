@@ -4,5 +4,15 @@ spring:
   datasource:
     url: jdbc:tc:postgresql:11.1:///integration-tests-db
 
-#flyway:
-#  locations: classpath:/db/migration1/common
+coop:
+  stlma:
+    tech:
+      resume:
+        update-token: "ChangeMe"
+        allowedOrigins:
+          - http://localhost:4201
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

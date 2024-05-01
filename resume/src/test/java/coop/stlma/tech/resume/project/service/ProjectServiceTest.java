@@ -4,6 +4,7 @@ import coop.stlma.tech.resume.education.data.EducationRepository;
 import coop.stlma.tech.resume.education.data.entity.EducationEntity;
 import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
+import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.project.data.ProjectRepository;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.project.error.NoSuchProjectException;
@@ -11,6 +12,7 @@ import coop.stlma.tech.resume.project.service.ProjectService;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
+import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillRelationEntity;
 import coop.stlma.tech.resume.util.TestUtils;
 import coop.stlma.tech.resume.worker.data.entity.WorkerEntity;
 import coop.stlma.tech.resume.worker.service.WorkerSkillUpdateService;
@@ -45,6 +47,38 @@ public class ProjectServiceTest {
 
     @Captor
     ArgumentCaptor<ProjectEntity> projectEntityArgumentCaptor;
+
+    @Test
+    void testUpdateProject_notFound() {
+        ProjectEntity project = new ProjectEntity();
+        project.setProjectId(UUID.nameUUIDFromBytes("project".getBytes()));
+        Mockito.when(projectRepository.findById(project.getProjectId())).thenReturn(Optional.empty());
+        Project updateMe = new Project();
+        updateMe.setProjectId(project.getProjectId());
+        Assertions.assertThrows(NoSuchProjectException.class, () -> testObject.updateProject(updateMe));
+    }
+
+    @Test
+    void testUpdateProject_happyPath() {
+        ProjectEntity project = new ProjectEntity();
+        project.setProjectId(UUID.nameUUIDFromBytes("project".getBytes()));
+        project.setProjectRelation(UUID.nameUUIDFromBytes("worker".getBytes()));
+        project.setProjectRelationType(WorkerEntity.WORKER_PROJECT_TYPE);
+        project.setTechsAndSkills(TestUtils.makeRelations(ProjectEntity.PROJECT_RELATION_TYPE, project.getProjectId(), "Java", "C++"));
+        Mockito.when(projectRepository.findById(project.getProjectId())).thenReturn(Optional.of(project));
+        Mockito.when(projectRepository.save(projectEntityArgumentCaptor.capture())).thenReturn(project);
+        Project updateMe = new Project();
+        updateMe.setProjectId(project.getProjectId());
+        updateMe.setProjectName("Updated Name");
+        testObject.updateProject(updateMe);
+        Mockito.verify(projectRepository).save(projectEntityArgumentCaptor.capture());
+        ProjectEntity captured = projectEntityArgumentCaptor.getValue();
+        Assertions.assertEquals("Updated Name", captured.getProjectName());
+        Assertions.assertEquals(project.getProjectId(), captured.getProjectId());
+        Assertions.assertEquals(project.getProjectRelation(), captured.getProjectRelation());
+        Assertions.assertEquals(project.getProjectRelationType(), captured.getProjectRelationType());
+        Assertions.assertEquals(project.getTechsAndSkills().size(), captured.getTechsAndSkills().size());
+    }
 
     @Test
     void testAddSkillsToProject_happyPath() {

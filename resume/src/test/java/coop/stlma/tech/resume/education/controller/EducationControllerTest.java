@@ -2,6 +2,7 @@ package coop.stlma.tech.resume.education.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.education.Education;
 import coop.stlma.tech.resume.education.error.NoSuchEducationException;
 import coop.stlma.tech.resume.education.service.EducationService;
@@ -10,15 +11,21 @@ import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
@@ -30,6 +37,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 @WebMvcTest(controllers = EducationController.class)
+@RunWith(SpringRunner.class)
+@ActiveProfiles("test")
+@Import(BasicAuthConfigAdapter.class)
 class EducationControllerTest {
     @MockBean
     EducationService educationService;
@@ -52,6 +62,7 @@ class EducationControllerTest {
                 .thenReturn(Education.builder().educationId(UUID.nameUUIDFromBytes("education".getBytes())).build());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/education/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                 .contentType("application/json")
                 .content(new ObjectMapper().writeValueAsString(
                         Map.of("educationType", "UNDERGRADUATE",
@@ -141,6 +152,7 @@ class EducationControllerTest {
         UUID workerId = UUID.nameUUIDFromBytes("worker".getBytes());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/education/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
             .contentType("application/json")
             .content(new ObjectMapper().writeValueAsString(
                 Map.of("educationType", "UNDERGRADUATE",
@@ -161,6 +173,7 @@ class EducationControllerTest {
                 .thenThrow(new NoSuchWorkerException(workerId));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/education/" + workerId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("educationType", "UNDERGRADUATE",
@@ -192,6 +205,7 @@ class EducationControllerTest {
                             .build()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/education/techSkill/" + educationId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content("[\"Java\", \"Python\", \"Javascript\"]"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -213,6 +227,7 @@ class EducationControllerTest {
                 .thenThrow(new NoSuchEducationException(educationId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/education/techSkill/" + educationId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content("[\"Java\", \"Python\", \"Javascript\"]"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -231,6 +246,7 @@ class EducationControllerTest {
                         .build());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/education/project/" + educationId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("projectName", "Fake Project",
@@ -259,6 +275,7 @@ class EducationControllerTest {
                 .thenThrow(new NoSuchEducationException(educationId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/education/project/" + educationId)
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(
                                 Map.of("projectName", "Fake Project",

@@ -4,15 +4,21 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.service.TechSkillsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,32 +28,62 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(controllers = TechSkillController.class)
-public class TechSkillControllerTest {
+@RunWith(SpringRunner.class)
+@ActiveProfiles("test")
+@Import(BasicAuthConfigAdapter.class)
+class TechSkillControllerTest {
     @MockBean
     TechSkillsService techSkillsService;
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     TypeReference<List<TechAndSkill>> skillListType = new TypeReference<List<TechAndSkill>>() {};
 
-    @BeforeEach
-    public void before() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .alwaysDo(print())
-                .build();
+
+    @Test
+    void bulkSave_noAuth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/tech-skills")
+                        .contentType("application/json")
+                        .content(new ObjectMapper().writeValueAsString(Collections.singletonList(TechAndSkill.builder()
+                                .techSkillId(UUID.nameUUIDFromBytes("one".getBytes()))
+                                .techSkillName("one")
+                                .build()))))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
-    public void testGetAllTechSkills_happyPath() throws Exception {
+    void bulkSave_wrongAuth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/tech-skills")
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "wrong"))
+                        .contentType("application/json")
+                        .content(new ObjectMapper().writeValueAsString(Collections.singletonList(TechAndSkill.builder()
+                                .techSkillId(UUID.nameUUIDFromBytes("one".getBytes()))
+                                .techSkillName("one")
+                                .build()))))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+    @Test
+    void bulkSave_happyPath() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/tech-skills")
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
+                        .contentType("application/json")
+                        .content(new ObjectMapper().writeValueAsString(List.of("one", "two", "three")
+                        )))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+
+        Mockito.verify(techSkillsService).bulkSave(List.of("one", "two", "three"));
+    }
+
+    @Test
+    void testGetAllTechSkills_happyPath() throws Exception {
         Mockito.when(techSkillsService.getAllTechSkills())
                 .thenReturn(List.of(TechAndSkill.builder()
                         .techSkillId(UUID.nameUUIDFromBytes("one".getBytes()))
@@ -76,7 +112,7 @@ public class TechSkillControllerTest {
     }
 
     @Test
-    public void testGetAllTechSKills_noneFound() throws Exception {
+    void testGetAllTechSKills_noneFound() throws Exception {
         Mockito.when(techSkillsService.getAllTechSkills()).thenReturn(Collections.emptyList());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/tech-skills"))
@@ -90,7 +126,7 @@ public class TechSkillControllerTest {
     }
 
     @Test
-    public void testGetByName_happyPath() throws Exception {
+    void testGetByName_happyPath() throws Exception {
         Mockito.when(techSkillsService.getByName("one"))
                 .thenReturn(TechAndSkill.builder()
                         .techSkillId(UUID.nameUUIDFromBytes("one".getBytes()))
@@ -109,7 +145,7 @@ public class TechSkillControllerTest {
     }
 
     @Test
-    public void testGetByName_notFound() throws Exception {
+    void testGetByName_notFound() throws Exception {
         Mockito.when(techSkillsService.getByName("one")).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/tech-skill/one"))

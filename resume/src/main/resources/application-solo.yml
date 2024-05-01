@@ -12,6 +12,15 @@ coop:
   stlma:
     tech:
       resume:
+        update-token: "ChangeMe"
         allowedOrigins:
           - http://localhost:4201
           - http://localhost:4200
+
+
+logging:
+  level:
+    coop:
+      stlma:
+        tech:
+          resume: trace
