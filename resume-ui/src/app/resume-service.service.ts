@@ -13,7 +13,7 @@ import {environment} from "../environments/environment";
   providedIn: 'root'
 })
 export class ResumeService {
-  private workerIdMe: string;
+  private readonly workerIdMe: string;
 
   constructor() {
     this.workerIdMe = "d40109cf-967c-45d8-a0eb-f3fbbd8f8471";

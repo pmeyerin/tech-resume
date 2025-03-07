@@ -1,8 +1,7 @@
-import {Component, Inject, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ResumeService} from "../resume-service.service";
 import {WorkHistoryDomain} from "../work-history-domain";
 import {MatDialog} from "@angular/material/dialog";
-import {SkillsDialogComponent} from "../skills-dialog/skills-dialog.component";
 import {SpinnerDialogComponent} from "../spinner-dialog/spinner-dialog.component";
 
 @Component({

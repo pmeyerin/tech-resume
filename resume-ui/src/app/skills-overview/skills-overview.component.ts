@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {SkillEstimatesDomain} from "../skill-estimates-domain";
 import {MatDialog} from "@angular/material/dialog";
 import {SkillsDialogComponent} from "../skills-dialog/skills-dialog.component";
-import {TechSkills} from "../tech-skills";
 
 @Component({
   selector: 'app-skills-overview',

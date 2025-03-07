@@ -107,7 +107,7 @@ export class SkillsDialogComponent {
       }
     });
 
-    return [...(employmentParents ? employmentParents : []), ...(educationParents ? educationParents : []), ...(projectParents ? projectParents : [])]
+    return [...(employmentParents || []), ...(educationParents || []), ...(projectParents || [])]
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
   }
 }

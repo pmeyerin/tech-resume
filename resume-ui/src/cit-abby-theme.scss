@@ -150,19 +150,7 @@ $mat-dark-theme-background: (
   disabled-list-option:     $dark-bg-lighter-10,
 );
 
-// Compute font config
-//@include mat.core($fontConfig);
-
 // Theme Config
-
-//body {
-//  --primary-color: #070172;
-//  --primary-lighter-color: #b5b3d5;
-//  --primary-darker-color: #040155;
-//  --text-primary-color: #{$light-primary-text};
-//  --text-primary-lighter-color: #{$dark-primary-text};
-//  --text-primary-darker-color: #{$light-primary-text};
-//}
 $mat-primary: (
   main: $dark-accent,
   lighter: $dark-accent-lighter,
@@ -176,15 +164,6 @@ $mat-primary: (
 );
 $theme-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
-
-//body {
-//  --accent-color: #060260;
-//  --accent-lighter-color: #b4b3cf;
-//  --accent-darker-color: #030144;
-//  --text-accent-color: #{$light-primary-text};
-//  --text-accent-lighter-color: #{$dark-primary-text};
-//  --text-accent-darker-color: #{$light-primary-text};
-//}
 $mat-accent: (
   main: #060260,
   lighter: #b4b3cf,
@@ -234,14 +213,9 @@ $typography: mat.define-typography-config(
   $font-family: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
 );
 
-//$my-theme: mat.define-dark-theme((color: ($theme-primary, $theme-accent, $theme-warn), typography: $typography));
 
 // Theme Init
 @include mat.all-component-themes($my-theme);
-
-//.theme-alternate {
-//  @include mat.all-component-themes($altTheme);
-//}
 
 // Specific component overrides, pieces that are not in line with the general theming
 
@@ -260,8 +234,8 @@ $typography: mat.define-typography-config(
 
 .material-icons {
   font-size: 24px;
-  font-family: 'Material Icons', 'Material Icons';
+  font-family: 'Material Icons', serif;
   .mat-badge-content {
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
   }
 }
