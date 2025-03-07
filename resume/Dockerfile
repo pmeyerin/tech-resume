@@ -4,7 +4,7 @@ WORKDIR /home/gradle/src
 RUN gradle clean bootJar --no-daemon
 
 FROM eclipse-temurin:21
-EXPOSE 8080
+EXPOSE 8081
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/tech-resume.jar
 #RUN gradlew clean bootJar

@@ -3,6 +3,7 @@ package coop.stlma.tech.resume.employment.service;
 import coop.stlma.tech.resume.employment.Employment;
 import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
+import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
@@ -88,6 +89,9 @@ public class EmploymentService {
     }
 
     public Employment updateEmployment(Employment employment) {
+        if (employment.getEmploymentId() == null) {
+            throw new InvalidEmploymentException("Field employmentId is required for update");
+        }
         EmploymentEntity existing = employmentRepository.findById(employment.getEmploymentId())
                 .orElseThrow(() -> new NoSuchEmploymentException(employment.getEmploymentId()));
         EmploymentEntity updateMe = EntityDtoMappingUtils.buildEmploymentDto(existing.getWorker(), employment);

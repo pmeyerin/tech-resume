@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.employment.Employment;
 import coop.stlma.tech.resume.employment.controller.EmploymentController;
+import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.employment.service.EmploymentService;
 import coop.stlma.tech.resume.project.Project;
@@ -52,6 +53,23 @@ class EmploymentControllerTest {
 
     @Captor
     ArgumentCaptor<Project> projectCaptor;
+
+    @Test
+    void testUpdateEmployment_nullId() throws Exception {
+        Mockito.when(employmentService.updateEmployment(any(Employment.class)))
+                .thenThrow(new InvalidEmploymentException("Invalid Employment"));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/employment")
+                        .with(SecurityMockMvcRequestPostProcessors.httpBasic("user", "ChangeMe"))
+                        .contentType("application/json")
+                        .content(new ObjectMapper().writeValueAsString(
+                                Map.of("employmentEnd", "2023-04-05",
+                                        "employmentStart", "2023-01-06",
+                                        "employmentName", "Fake Job",
+                                        "employmentDescription", "Fake Job desc"))))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string("Invalid Employment"));
+    }
 
     @Test
     void testUpdateEmployment_happyPath() throws Exception {

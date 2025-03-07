@@ -1,5 +1,6 @@
 package coop.stlma.tech.resume.employment.controller;
 
+import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.employment.Employment;
 import coop.stlma.tech.resume.employment.service.EmploymentService;
@@ -8,6 +9,7 @@ import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -75,5 +77,15 @@ public class EmploymentController {
         } catch (NoSuchEmploymentException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ExceptionHandler(NoSuchEmploymentException.class)
+    public ResponseEntity<Void> handleNoSuchEmploymentException(NoSuchEmploymentException e) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(InvalidEmploymentException.class)
+    public ResponseEntity<String> handleInvalidEmploymentException(InvalidEmploymentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
