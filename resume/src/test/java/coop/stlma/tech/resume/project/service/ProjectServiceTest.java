@@ -7,6 +7,7 @@ import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.project.data.ProjectRepository;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
+import coop.stlma.tech.resume.project.error.InvalidProjectException;
 import coop.stlma.tech.resume.project.error.NoSuchProjectException;
 import coop.stlma.tech.resume.project.service.ProjectService;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
@@ -47,6 +48,12 @@ public class ProjectServiceTest {
 
     @Captor
     ArgumentCaptor<ProjectEntity> projectEntityArgumentCaptor;
+
+    @Test
+    void testUpdateProject_nullId() {
+        Assertions.assertThrows(InvalidProjectException.class, () ->
+                testObject.updateProject(Project.builder().build()));
+    }
 
     @Test
     void testUpdateProject_notFound() {

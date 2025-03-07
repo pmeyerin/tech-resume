@@ -3,6 +3,7 @@ package coop.stlma.tech.resume.employment.service;
 import coop.stlma.tech.resume.employment.Employment;
 import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
+import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.employment.service.EmploymentService;
 import coop.stlma.tech.resume.project.Project;
@@ -47,6 +48,12 @@ class EmploymentServiceTest {
 
     @Captor
     ArgumentCaptor<EmploymentEntity> employmentCaptor;
+
+    @Test
+    void testUpdateEmployment_nullId() {
+        Assertions.assertThrows(InvalidEmploymentException.class, () ->
+                testObject.updateEmployment(Employment.builder().build()));
+    }
 
     @Test
     void testAddEmployment_happyPath() {

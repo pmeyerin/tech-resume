@@ -9,6 +9,7 @@ import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.project.data.ProjectRepository;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
+import coop.stlma.tech.resume.project.error.InvalidProjectException;
 import coop.stlma.tech.resume.project.error.NoSuchProjectException;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
@@ -94,6 +95,9 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project) {
+        if (project.getProjectId() == null) {
+            throw new InvalidProjectException("Field projectId is required for update");
+        }
         ProjectEntity existing = projectRepository.findById(project.getProjectId()).orElseThrow(() -> new NoSuchProjectException(project.getProjectId()));
         ProjectEntity entity = EntityDtoMappingUtils.buildProjectEntity(project, existing.getProjectRelationType());
         entity.setProjectRelation(existing.getProjectRelation());

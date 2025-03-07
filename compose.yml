@@ -6,7 +6,7 @@ services:
         build:
             context: ./resume
         ports:
-          - "9000:80"
+          - "8081:8080"
         depends_on:
           - db
 
@@ -16,7 +16,7 @@ services:
         build:
             context: ./resume-ui
         ports:
-          - "4200:80"
+          - "4200:4200"
         depends_on:
           - backend
     
