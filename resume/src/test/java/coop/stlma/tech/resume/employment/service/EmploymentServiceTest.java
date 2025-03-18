@@ -5,7 +5,6 @@ import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
 import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
-import coop.stlma.tech.resume.employment.service.EmploymentService;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;

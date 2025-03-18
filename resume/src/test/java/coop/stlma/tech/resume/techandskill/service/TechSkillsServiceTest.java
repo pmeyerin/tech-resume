@@ -29,7 +29,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest(classes = {TechSkillsService.class})
-public class TechSkillsServiceTest {
+class TechSkillsServiceTest {
 
     @Autowired
     TechSkillsService testObject;
@@ -44,7 +44,7 @@ public class TechSkillsServiceTest {
     EmploymentRepository employmentRepository;
 
     @Test
-    public void testGetByWorkerAndSkill_happyPath() {
+    void testGetByWorkerAndSkill_happyPath() {
         UUID skillId = UUID.nameUUIDFromBytes("skill".getBytes());
         UUID workerId = UUID.nameUUIDFromBytes("worker".getBytes());
 
@@ -128,7 +128,7 @@ public class TechSkillsServiceTest {
     }
 
     @Test
-    public void testBulkSave_happyPath() {
+    void testBulkSave_happyPath() {
         testObject.bulkSave(List.of("one", "two"));
 
         ArgumentCaptor<List<TechAndSkillEntity>> captor = ArgumentCaptor.forClass(List.class);
@@ -141,7 +141,7 @@ public class TechSkillsServiceTest {
     }
 
     @Test
-    public void testGetAll_happyPath() {
+    void testGetAll_happyPath() {
         TechAndSkillEntity one = new TechAndSkillEntity();
         one.setTechSkillId(UUID.nameUUIDFromBytes("one".getBytes()));
         one.setTechSkillName("some skill");
@@ -163,14 +163,14 @@ public class TechSkillsServiceTest {
     }
 
     @Test
-    public void testGetAll_noneFound() {
+    void testGetAll_noneFound() {
         List<TechAndSkill> result = testObject.getAllTechSkills();
 
         Assertions.assertEquals(0, result.size());
     }
 
     @Test
-    public void testGetByName_happyPath() {
+    void testGetByName_happyPath() {
         TechAndSkillEntity one = new TechAndSkillEntity();
         one.setTechSkillId(UUID.nameUUIDFromBytes("one".getBytes()));
         one.setTechSkillName("some skill");
@@ -185,7 +185,7 @@ public class TechSkillsServiceTest {
     }
 
     @Test
-    public void testGetByName_notFound() {
+    void testGetByName_notFound() {
         Mockito.when(techSkillsRepository.findByTechSkillName("some skill"))
                 .thenReturn(Optional.empty());
 

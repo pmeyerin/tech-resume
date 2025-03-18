@@ -190,7 +190,7 @@ class EducationControllerTest {
     void testAddSkillToEducation_happyPath() throws Exception {
         UUID educationId = UUID.nameUUIDFromBytes("education".getBytes());
 
-        Mockito.when(educationService.addSkillsToEducation(eq(educationId), eq(List.of("Java", "Python", "Javascript"))))
+        Mockito.when(educationService.addSkillsToEducation(educationId, List.of("Java", "Python", "Javascript")))
                 .thenReturn(List.of(TechAndSkill.builder()
                             .techSkillId(UUID.nameUUIDFromBytes("java".getBytes()))
                             .techSkillName("java")
@@ -223,7 +223,7 @@ class EducationControllerTest {
     void testAddSkillToEducation_notFound() throws Exception {
         UUID educationId = UUID.nameUUIDFromBytes("education".getBytes());
 
-        Mockito.when(educationService.addSkillsToEducation(eq(educationId), eq(List.of("Java", "Python", "Javascript"))))
+        Mockito.when(educationService.addSkillsToEducation(educationId, List.of("Java", "Python", "Javascript")))
                 .thenThrow(new NoSuchEducationException(educationId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/education/techSkill/" + educationId)
@@ -233,7 +233,7 @@ class EducationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andReturn();
 
-        Mockito.verify(educationService).addSkillsToEducation(eq(educationId), eq(List.of("Java", "Python", "Javascript")));
+        Mockito.verify(educationService).addSkillsToEducation(educationId, List.of("Java", "Python", "Javascript"));
     }
 
     @Test

@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest(classes = {WorkerService.class})
-public class WorkerServiceTest {
+class WorkerServiceTest {
 
     @Autowired
     WorkerService testObject;
@@ -43,7 +43,7 @@ public class WorkerServiceTest {
     ArgumentCaptor<WorkerEntity> workerCaptor;
 
     @Test
-    public void testAddProjectToWorker_happyPath() {
+    void testAddProjectToWorker_happyPath() {
         WorkerEntity worker = new WorkerEntity();
         worker.setWorkerId(UUID.nameUUIDFromBytes("worker".getBytes()));
         Project project = Project.builder()
@@ -76,7 +76,7 @@ public class WorkerServiceTest {
     }
 
     @Test
-    public void testGetAll_happyPath() {
+    void testGetAll_happyPath() {
         TechAndSkillEntity javaSkill = new TechAndSkillEntity();
         javaSkill.setTechSkillId(UUID.nameUUIDFromBytes("java".getBytes()));
         javaSkill.setTechSkillName("java");
@@ -262,7 +262,7 @@ public class WorkerServiceTest {
     }
 
     @Test
-    public void testGetAll_noneFound() {
+    void testGetAll_noneFound() {
         Mockito.when(workerRepository.findAll())
                 .thenReturn(Collections.emptyList());
 

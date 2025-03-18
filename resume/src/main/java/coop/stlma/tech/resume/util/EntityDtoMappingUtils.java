@@ -15,7 +15,6 @@ import coop.stlma.tech.resume.worker.WorkerSkillEstimate;
 import coop.stlma.tech.resume.worker.data.entity.WorkerTechSkillEstimateEntity;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class EntityDtoMappingUtils {
 

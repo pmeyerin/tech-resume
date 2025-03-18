@@ -13,9 +13,6 @@ import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
 import coop.stlma.tech.resume.util.EntityDtoMappingUtils;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

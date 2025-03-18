@@ -7,7 +7,6 @@ import coop.stlma.tech.resume.education.data.EducationTypeRepository;
 import coop.stlma.tech.resume.education.data.entity.EducationEntity;
 import coop.stlma.tech.resume.education.data.entity.EducationTypeEntity;
 import coop.stlma.tech.resume.education.error.NoSuchEducationException;
-import coop.stlma.tech.resume.education.service.EducationService;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
