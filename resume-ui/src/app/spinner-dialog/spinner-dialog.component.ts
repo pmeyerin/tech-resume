@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="dialog">
       <span>
-        Please wait. The web service is initializing...
+        Please wait. The web service is initializing. This may take up to a minute...
       </span>
       <mat-spinner></mat-spinner>
     </div>

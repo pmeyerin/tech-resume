@@ -1,14 +1,32 @@
 package coop.stlma.tech.resume.util;
 
+import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillRelationEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestUtils {
+
+    public static List<ProjectEntity> makeProjects(int count) {
+        List<ProjectEntity> projects = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            projects.add(makeProject("Project " + i));
+        }
+        return projects;
+    }
+
+    public static ProjectEntity makeProject(String seed) {
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(UUID.nameUUIDFromBytes(seed.getBytes()));
+        entity.setProjectName(seed);
+        entity.setProjectDescription("A " + seed + " project");
+        return entity;
+    }
 
     public static List<TechAndSkillRelationEntity> makeRelations(int relationType,UUID relationId, TechAndSkillEntity... skill) {
         return List.of(skill).stream()

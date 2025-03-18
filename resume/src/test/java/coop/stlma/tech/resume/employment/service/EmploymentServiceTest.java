@@ -11,6 +11,7 @@ import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
+import coop.stlma.tech.resume.util.TestUtils;
 import coop.stlma.tech.resume.worker.data.WorkerRepository;
 import coop.stlma.tech.resume.worker.data.entity.WorkerEntity;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
@@ -48,6 +49,38 @@ class EmploymentServiceTest {
 
     @Captor
     ArgumentCaptor<EmploymentEntity> employmentCaptor;
+
+    @Test
+    void testUpdateEmployment_happyPath() {
+        UUID employmentId = UUID.nameUUIDFromBytes("employment".getBytes());
+
+        Employment input = Employment.builder()
+                .employmentId(employmentId)
+                .employmentEnd(LocalDate.of(2023, 4, 5))
+                .employmentStart(LocalDate.of(2023, 1, 6))
+                .employmentName("Fake Job")
+                .employmentDescription("Fake Job desc")
+                .build();
+
+        EmploymentEntity expected = new EmploymentEntity();
+        expected.setEmploymentId(employmentId);
+        expected.setProjects(TestUtils.makeProjects(2));
+
+        Mockito.when(employmentRepository.findById(employmentId)).thenReturn(Optional.of(expected));
+
+        Mockito.when(employmentRepository.save(employmentCaptor.capture()))
+                .thenReturn(expected);
+        Employment actual = testObject.updateEmployment(input, false);
+
+        EmploymentEntity savedEmployment = employmentCaptor.getValue();
+        Assertions.assertEquals(2, savedEmployment.getProjects().size());
+        Assertions.assertEquals(input.getEmploymentId(), savedEmployment.getEmploymentId());
+        Assertions.assertEquals(input.getEmploymentName(), savedEmployment.getEmploymentName());
+        Assertions.assertEquals(input.getEmploymentDescription(), savedEmployment.getEmploymentDescription());
+        Assertions.assertEquals(input.getEmploymentStart(), savedEmployment.getEmploymentStart());
+        Assertions.assertEquals(input.getEmploymentEnd(), savedEmployment.getEmploymentEnd());
+        Assertions.assertEquals(2, actual.getProjects().size());
+    }
 
     @Test
     void testUpdateEmployment_nullId() {

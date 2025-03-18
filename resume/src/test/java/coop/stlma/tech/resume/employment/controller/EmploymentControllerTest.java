@@ -56,7 +56,7 @@ class EmploymentControllerTest {
 
     @Test
     void testUpdateEmployment_nullId() throws Exception {
-        Mockito.when(employmentService.updateEmployment(any(Employment.class)))
+        Mockito.when(employmentService.updateEmployment(any(Employment.class), eq(false)))
                 .thenThrow(new InvalidEmploymentException("Invalid Employment"));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/employment")
@@ -88,7 +88,7 @@ class EmploymentControllerTest {
                                         "employmentDescription", "Fake Job desc"))))
                         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employmentService).updateEmployment(argumentCaptor.capture());
+        Mockito.verify(employmentService).updateEmployment(argumentCaptor.capture(), eq(false));
 
         Employment savedEmp = argumentCaptor.getValue();
         Assertions.assertEquals(employmentId, savedEmp.getEmploymentId());
