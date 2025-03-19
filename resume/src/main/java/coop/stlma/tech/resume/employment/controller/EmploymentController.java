@@ -7,7 +7,6 @@ import coop.stlma.tech.resume.employment.service.EmploymentService;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,9 +25,6 @@ import java.util.UUID;
 @RequestMapping("/api/employment")
 public class EmploymentController {
     private final EmploymentService employmentService;
-
-    @Value("${coop.stlma.tech.resume.update-token}")
-    private String updateToken;
 
     public EmploymentController(EmploymentService employmentService) {
         this.employmentService = employmentService;
