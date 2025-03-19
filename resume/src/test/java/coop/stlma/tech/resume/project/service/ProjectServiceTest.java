@@ -9,11 +9,9 @@ import coop.stlma.tech.resume.project.data.ProjectRepository;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.project.error.InvalidProjectException;
 import coop.stlma.tech.resume.project.error.NoSuchProjectException;
-import coop.stlma.tech.resume.project.service.ProjectService;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
-import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillRelationEntity;
 import coop.stlma.tech.resume.util.TestUtils;
 import coop.stlma.tech.resume.worker.data.entity.WorkerEntity;
 import coop.stlma.tech.resume.worker.service.WorkerSkillUpdateService;
@@ -31,7 +29,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest(classes = {ProjectService.class})
-public class ProjectServiceTest {
+class ProjectServiceTest {
     @Autowired
     ProjectService testObject;
 

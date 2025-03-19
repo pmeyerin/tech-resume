@@ -89,13 +89,25 @@ public class EmploymentService {
     }
 
     public Employment updateEmployment(Employment employment) {
+        return updateEmployment(employment, false);
+    }
+
+    public Employment updateEmployment(Employment employment, boolean deepUpdate) {
         if (employment.getEmploymentId() == null) {
             throw new InvalidEmploymentException("Field employmentId is required for update");
         }
         EmploymentEntity existing = employmentRepository.findById(employment.getEmploymentId())
                 .orElseThrow(() -> new NoSuchEmploymentException(employment.getEmploymentId()));
-        EmploymentEntity updateMe = EntityDtoMappingUtils.buildEmploymentDto(existing.getWorker(), employment);
-        EmploymentEntity result = employmentRepository.save(updateMe);
+        if (deepUpdate) {
+            existing = EntityDtoMappingUtils.buildEmploymentDto(existing.getWorker(), employment);
+        } else {
+            existing = EntityDtoMappingUtils.shallowMapEmploymentDto(employment, existing);
+        }
+        EmploymentEntity result = employmentRepository.save(existing);
         return EntityDtoMappingUtils.buildEmployment(result);
+    }
+
+    public void deleteEmployment(UUID employmentId) {
+        employmentRepository.deleteById(employmentId);
     }
 }

@@ -1,6 +1,5 @@
 package coop.stlma.tech.resume.employment.data;
 
-import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
@@ -109,7 +108,7 @@ public class EmploymentRepositoryTest {
         expected.setTechsAndSkills(List.of(relation));
         expected.setEmploymentName("Expected");
         expected.setWorker(saveMe.getWorkerId());
-        expected = testObject.save(expected);
+        testObject.save(expected);
 
         List<EmploymentEntity> found = testObject.findByWorkerAndSkill(incorrect.getWorkerId(), skill.getTechSkillId());
 
@@ -138,7 +137,7 @@ public class EmploymentRepositoryTest {
         expected.setTechsAndSkills(List.of(relation));
         expected.setEmploymentName("Expected");
         expected.setWorker(saveMe.getWorkerId());
-        expected = testObject.save(expected);
+        testObject.save(expected);
 
         List<EmploymentEntity> found = testObject.findByWorkerAndSkill(saveMe.getWorkerId(), incorrect.getTechSkillId());
 

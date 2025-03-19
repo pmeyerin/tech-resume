@@ -31,12 +31,12 @@ public class TechSkillsRepositoryTest {
             .withPassword("password");
 
     @AfterEach
-    public void cleanup() {
+    void cleanup() {
         testObject.deleteAll();
     }
 
     @Test
-    public void testGetByNameIn_happyPath() {
+    void testGetByNameIn_happyPath() {
 
         TechAndSkillEntity saveMe = new TechAndSkillEntity();
         saveMe.setTechSkillName("Some skill");
@@ -58,7 +58,7 @@ public class TechSkillsRepositoryTest {
 
 
     @Test
-    public void testGetByName_found() {
+    void testGetByName_found() {
         TechAndSkillEntity saveMe = new TechAndSkillEntity();
         saveMe.setTechSkillName("Some skill");
         testObject.save(saveMe);
@@ -73,7 +73,7 @@ public class TechSkillsRepositoryTest {
     }
 
     @Test
-    public void testGetByName_notFound() {
+    void testGetByName_notFound() {
         TechAndSkillEntity saveMe = new TechAndSkillEntity();
         saveMe.setTechSkillName("Some skill");
         Optional<TechAndSkillEntity> found = testObject.findByTechSkillName("Wrong skill");
@@ -83,7 +83,7 @@ public class TechSkillsRepositoryTest {
     }
 
     @Test
-    public void testGetAllTechSkills_oneFound() {
+    void testGetAllTechSkills_oneFound() {
         TechAndSkillEntity saveMe = new TechAndSkillEntity();
         saveMe.setTechSkillName("Some skill");
 
@@ -99,7 +99,7 @@ public class TechSkillsRepositoryTest {
     }
 
     @Test
-    public void testGetAllTechSkills_manyFound() {
+    void testGetAllTechSkills_manyFound() {
         TechAndSkillEntity saveMe = new TechAndSkillEntity();
         saveMe.setTechSkillName("Some skill");
         testObject.save(saveMe);
@@ -117,7 +117,7 @@ public class TechSkillsRepositoryTest {
     }
 
     @Test
-    public void testGetAllTechSkills_noneFound() {
+    void testGetAllTechSkills_noneFound() {
         Iterable<TechAndSkillEntity> found = testObject.findAll();
         List<TechAndSkillEntity> easierToWorkWith = new ArrayList<>();
         found.forEach(easierToWorkWith::add);

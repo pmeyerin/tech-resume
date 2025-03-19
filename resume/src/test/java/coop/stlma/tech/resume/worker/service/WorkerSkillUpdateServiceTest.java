@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest(classes = {WorkerSkillUpdateService.class})
-public class WorkerSkillUpdateServiceTest {
+class WorkerSkillUpdateServiceTest {
 
     @Autowired
     WorkerSkillUpdateService testObject;
@@ -35,7 +35,7 @@ public class WorkerSkillUpdateServiceTest {
     WorkerSkillEstimateRepository workerSkillEstimateRepository;
 
     @Test
-    public void testUpdateWorkerSkills_happyPath() {
+    void testUpdateWorkerSkills_happyPath() {
         TechAndSkillEntity javaSkill = new TechAndSkillEntity();
         javaSkill.setTechSkillId(UUID.nameUUIDFromBytes("java".getBytes()));
         javaSkill.setTechSkillName("java");
@@ -119,7 +119,7 @@ public class WorkerSkillUpdateServiceTest {
     }
 
     @Test
-    public void testUpdateWorkerSkills_ongoingWork() {
+    void testUpdateWorkerSkills_ongoingWork() {
         TechAndSkillEntity javaSkill = new TechAndSkillEntity();
         javaSkill.setTechSkillId(UUID.nameUUIDFromBytes("java".getBytes()));
         javaSkill.setTechSkillName("java");

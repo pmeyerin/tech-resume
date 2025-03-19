@@ -6,7 +6,6 @@ import coop.stlma.tech.resume.education.data.entity.EducationEntity;
 import coop.stlma.tech.resume.education.data.entity.EducationTypeEntity;
 import coop.stlma.tech.resume.employment.data.EmploymentRepository;
 import coop.stlma.tech.resume.employment.data.entity.EmploymentEntity;
-import coop.stlma.tech.resume.project.data.ProjectRepository;
 import coop.stlma.tech.resume.project.data.entity.ProjectEntity;
 import coop.stlma.tech.resume.techandskill.data.TechSkillsRepository;
 import coop.stlma.tech.resume.techandskill.data.entity.TechAndSkillEntity;
@@ -176,7 +175,7 @@ public class ProjectRepositoryTest {
         expected.setProjectName("Expected");
         expected.setProjectRelation(saveMe.getWorkerId());
         expected.setProjectRelationType(ProjectEntity.PROJECT_RELATION_TYPE);
-        expected = testObject.save(expected);
+        testObject.save(expected);
 
         List<ProjectEntity> found = testObject.findByWorkerAndSkill(incorrect.getWorkerId(), skill.getTechSkillId());
 
@@ -206,7 +205,7 @@ public class ProjectRepositoryTest {
         expected.setProjectName("Expected");
         expected.setProjectRelation(saveMe.getWorkerId());
         expected.setProjectRelationType(ProjectEntity.PROJECT_RELATION_TYPE);
-        expected = testObject.save(expected);
+        testObject.save(expected);
 
         List<ProjectEntity> found = testObject.findByWorkerAndSkill(saveMe.getWorkerId(), incorrect.getTechSkillId());
 

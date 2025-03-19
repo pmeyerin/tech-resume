@@ -7,15 +7,15 @@ import coop.stlma.tech.resume.employment.service.EmploymentService;
 import coop.stlma.tech.resume.project.Project;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.worker.error.NoSuchWorkerException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,9 +25,6 @@ import java.util.UUID;
 @RequestMapping("/api/employment")
 public class EmploymentController {
     private final EmploymentService employmentService;
-
-    @Value("${coop.stlma.tech.resume.update-token}")
-    private String updateToken;
 
     public EmploymentController(EmploymentService employmentService) {
         this.employmentService = employmentService;
@@ -48,10 +45,21 @@ public class EmploymentController {
     }
 
     @PutMapping
-    public ResponseEntity<Employment> updateEmployment(@RequestBody Employment employment) {
+    public ResponseEntity<Employment> updateEmployment(@RequestBody Employment employment,
+                                                       @RequestParam(name = "deepUpdate", defaultValue = "false") boolean deepUpdate) {
         try {
-            Employment result = employmentService.updateEmployment(employment);
+            Employment result = employmentService.updateEmployment(employment, deepUpdate);
             return ResponseEntity.ok().body(result);
+        } catch (NoSuchEmploymentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{employmentId}")
+    public ResponseEntity<Void> deleteEmployment(@PathVariable("employmentId") UUID employmentId) {
+        try {
+            employmentService.deleteEmployment(employmentId);
+            return ResponseEntity.ok().build();
         } catch (NoSuchEmploymentException e) {
             return ResponseEntity.notFound().build();
         }

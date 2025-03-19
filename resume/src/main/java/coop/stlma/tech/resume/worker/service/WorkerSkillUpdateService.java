@@ -87,7 +87,6 @@ public class WorkerSkillUpdateService {
         Set<TechAndSkillEntity> allSkills = allSkillsForWorker(workerEntity);
         workerSkillEstimateRepository.deleteByWorker(workerEntity.getWorkerId());
         workerSkillEstimateRepository.flush();
-//        workerSkillEstimateRepository.deleteAll(workerEntity.getTechsAndSkillsEstimates());
 
         allSkills.forEach(skill -> updateSkillEstimates(workerEntity, skill));
     }

@@ -3,8 +3,6 @@ package coop.stlma.tech.resume.techandskill.controller;
 import coop.stlma.tech.resume.techandskill.SkillGrouping;
 import coop.stlma.tech.resume.techandskill.TechAndSkill;
 import coop.stlma.tech.resume.techandskill.service.TechSkillsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import coop.stlma.tech.resume.config.BasicAuthConfigAdapter;
 import coop.stlma.tech.resume.employment.Employment;
-import coop.stlma.tech.resume.employment.controller.EmploymentController;
 import coop.stlma.tech.resume.employment.error.InvalidEmploymentException;
 import coop.stlma.tech.resume.employment.error.NoSuchEmploymentException;
 import coop.stlma.tech.resume.employment.service.EmploymentService;
@@ -56,7 +55,7 @@ class EmploymentControllerTest {
 
     @Test
     void testUpdateEmployment_nullId() throws Exception {
-        Mockito.when(employmentService.updateEmployment(any(Employment.class)))
+        Mockito.when(employmentService.updateEmployment(any(Employment.class), eq(false)))
                 .thenThrow(new InvalidEmploymentException("Invalid Employment"));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/employment")
@@ -88,7 +87,7 @@ class EmploymentControllerTest {
                                         "employmentDescription", "Fake Job desc"))))
                         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employmentService).updateEmployment(argumentCaptor.capture());
+        Mockito.verify(employmentService).updateEmployment(argumentCaptor.capture(), eq(false));
 
         Employment savedEmp = argumentCaptor.getValue();
         Assertions.assertEquals(employmentId, savedEmp.getEmploymentId());
@@ -230,7 +229,7 @@ class EmploymentControllerTest {
     void testAddSkillToEmployment_happyPath() throws Exception {
         UUID employmentId = UUID.nameUUIDFromBytes("employment".getBytes());
 
-        Mockito.when(employmentService.addSkillsToEmployment(eq(employmentId), eq(List.of("Java", "Python", "Javascript"))))
+        Mockito.when(employmentService.addSkillsToEmployment(employmentId, List.of("Java", "Python", "Javascript")))
                 .thenReturn(List.of(TechAndSkill.builder()
                                 .techSkillId(UUID.nameUUIDFromBytes("java".getBytes()))
                                 .techSkillName("java")
@@ -263,7 +262,7 @@ class EmploymentControllerTest {
     void testAddSkillToEmployment_notFound() throws Exception {
         UUID employmentId = UUID.nameUUIDFromBytes("employment".getBytes());
 
-        Mockito.when(employmentService.addSkillsToEmployment(eq(employmentId), eq(List.of("Java", "Python", "Javascript"))))
+        Mockito.when(employmentService.addSkillsToEmployment(employmentId, List.of("Java", "Python", "Javascript")))
                 .thenThrow(new NoSuchEmploymentException(employmentId));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/employment/techSkill/" + employmentId)
@@ -273,7 +272,7 @@ class EmploymentControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andReturn();
 
-        Mockito.verify(employmentService).addSkillsToEmployment(eq(employmentId), eq(List.of("Java", "Python", "Javascript")));
+        Mockito.verify(employmentService).addSkillsToEmployment(employmentId, List.of("Java", "Python", "Javascript"));
     }
 
     @Test

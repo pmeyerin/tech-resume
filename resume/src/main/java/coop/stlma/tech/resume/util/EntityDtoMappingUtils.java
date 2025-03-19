@@ -15,7 +15,6 @@ import coop.stlma.tech.resume.worker.WorkerSkillEstimate;
 import coop.stlma.tech.resume.worker.data.entity.WorkerTechSkillEstimateEntity;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class EntityDtoMappingUtils {
 
@@ -104,10 +103,15 @@ public class EntityDtoMappingUtils {
     public static EmploymentEntity buildEmploymentDto(UUID workerId, Employment employment) {
         EmploymentEntity entity = new EmploymentEntity();
         entity.setWorker(workerId);
-        entity.setEmploymentName(employment.getEmploymentName());
-        entity.setEmploymentDescription(employment.getEmploymentDescription());
-        entity.setEmploymentStart(employment.getEmploymentStart());
-        entity.setEmploymentEnd(employment.getEmploymentEnd());
+        return shallowMapEmploymentDto(employment, entity);
+    }
+
+    public static EmploymentEntity shallowMapEmploymentDto(Employment model, EmploymentEntity entity) {
+        entity.setEmploymentName(model.getEmploymentName());
+        entity.setEmploymentDescription(model.getEmploymentDescription());
+        entity.setEmploymentStart(model.getEmploymentStart());
+        entity.setEmploymentEnd(model.getEmploymentEnd());
+
         return entity;
     }
 }
